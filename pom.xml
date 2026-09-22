@@ -24,6 +24,7 @@
         <module>vault-contracts</module>
         <module>vault-spi</module>
         <module>vault-application</module>
+        <module>vault-infrastructure</module>
         <module>vault-server</module>
     </modules>
 
