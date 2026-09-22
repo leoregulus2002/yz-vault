@@ -206,7 +206,7 @@ public class ApplicationException extends RuntimeException {
 
 - [ ] **Step 4: Run focused tests to verify green**
 
-Run: `mvn -pl vault-application -am -Dtest=ApplicationExceptionTest,RepositoryPortTest test`
+Run: `mvn -pl vault-application -am -Dsurefire.failIfNoSpecifiedTests=false -Dtest=ApplicationExceptionTest,RepositoryPortTest test`
 
 Expected: PASS.
 

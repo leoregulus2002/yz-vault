@@ -1,5 +1,6 @@
 package com.yz.vault.contracts.api;
 
+import com.yz.vault.domain.error.VaultErrorCode;
 import java.util.Objects;
 
 /** A client-safe error payload. Callers must not place secrets or internal stack details in its message. */
