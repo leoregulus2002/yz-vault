@@ -1,6 +1,7 @@
 package com.yz.vault.contracts.api;
 
 import com.yz.vault.contracts.request.RequestContext;
+import com.yz.vault.domain.error.VaultErrorCode;
 import java.util.Objects;
 
 /** Envelope shared by future HTTP endpoints; it separates successful data from client-safe errors. */

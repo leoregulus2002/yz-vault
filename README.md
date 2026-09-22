@@ -2,9 +2,9 @@
 
 `yz-vault` is an independently designed enterprise secrets and key-management platform. It is inspired by established secrets-management concepts, but does not copy HashiCorp Vault source code.
 
-## Phase 1 status
+## Delivery status
 
-This repository currently provides a Java 26 / Spring Boot 4 architecture skeleton. It intentionally contains no secret storage, encryption implementation, authentication method, database integration, or HTTP business API. Those capabilities are delivered only in their approved phases.
+Phase 1 is complete. Phase 2 is Crypto & Key Management; the repository does not yet implement encryption, authentication, database persistence, or HTTP business APIs.
 
 ## Modules
 
@@ -14,6 +14,7 @@ This repository currently provides a Java 26 / Spring Boot 4 architecture skelet
 | `vault-contracts` | API response envelope, error codes, and request metadata. |
 | `vault-spi` | Stable plugin contracts for secret engines, cryptography, storage, authentication, database plugins, and audit sinks. |
 | `vault-application` | Typed use-case boundary between adapters and domain/SPI contracts. |
+| `vault-infrastructure` | Technology-neutral Phase 1 adapters for time, identifiers, and secure random bytes. |
 | `vault-server` | Independently runnable Spring Boot server bootstrap. |
 
 ## Build

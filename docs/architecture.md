@@ -2,13 +2,14 @@
 
 ## Scope
 
-Phase 1 establishes a modular monolith. The server is a single independently deployable Spring Boot application while its core has strict module boundaries. It does not yet define a persistence implementation, crypto algorithm, authentication flow, or externally consumable secret API.
+Phase 1 establishes a modular monolith. The server is a single independently deployable Spring Boot application while its core has strict module boundaries. It defines technology-neutral foundation contracts but does not define persistence, crypto, authentication, or externally consumable secret behavior.
 
 ## Dependency direction
 
 ```text
 vault-server → vault-application → vault-spi → vault-contracts → vault-domain
                                  ↘ vault-domain
+vault-infrastructure → vault-domain
 ```
 
 `vault-contracts` uses `RequestId` from `vault-domain` so the API correlation identifier is one stable value object across HTTP, application, and audit boundaries. `vault-domain` has no dependency on Spring, database drivers, MyBatis, Flyway, or a plugin implementation.
@@ -29,7 +30,11 @@ Defines the plugin contracts requested by the product: `SecretEngine`, `CryptoPr
 
 ### vault-application
 
-Defines the typed `VaultOperation` use-case boundary. Future command/query handlers coordinate domain behavior and SPI implementations here.
+Defines the typed `VaultOperation` use-case boundary, application failures, and persistence-neutral repository ports. Future command/query handlers coordinate domain behavior and SPI implementations here.
+
+### vault-infrastructure
+
+Contains generic adapters for time, identifiers, and cryptographically secure random bytes. It uses injected JDK types and deliberately has no jOOQ, Flyway, PostgreSQL, HikariCP, or Testcontainers dependency in Phase 1.
 
 ### vault-server
 

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.yz.vault.contracts.request.RequestContext;
+import com.yz.vault.domain.error.VaultErrorCode;
 import com.yz.vault.domain.identifier.RequestId;
 import java.time.Instant;
 import org.junit.jupiter.api.Test;

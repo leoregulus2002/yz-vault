@@ -8,22 +8,12 @@
         <artifactId>yz-vault-parent</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>vault-application</artifactId>
-    <name>yz-vault application</name>
+    <artifactId>vault-infrastructure</artifactId>
+    <name>yz-vault infrastructure</name>
     <dependencies>
         <dependency>
             <groupId>com.yz.vault</groupId>
             <artifactId>vault-domain</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yz.vault</groupId>
-            <artifactId>vault-contracts</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.yz.vault</groupId>
-            <artifactId>vault-spi</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
