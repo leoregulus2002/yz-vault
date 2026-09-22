@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Local defense-in-depth: reject staged private-key material and common
+# plaintext secret assignments. CI must enforce an equivalent server-side scan.
+readonly forbidden_name_pattern='(^|/)(\.env(\..*)?|.*\.(pem|key|p12|pfx|jks|keystore))$|(^|/)(secrets|keys)/'
+readonly forbidden_content_pattern='(BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY|((ROOT|MASTER|UNSEAL|PRIVATE)[_-]?KEY)[[:space:]]*[:=]|((DATABASE|DB)[_-]?(PASSWORD|PASSWD))[[:space:]]*[:=]|((ACCESS|API|AUTH)[_-]?TOKEN)[[:space:]]*[:=]|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9_]{20,})'
+
+while IFS= read -r -d '' file; do
+  if [[ "$file" =~ $forbidden_name_pattern ]]; then
+    printf 'Commit blocked: staged file name may contain sensitive material: %s\n' "$file" >&2
+    exit 1
+  fi
+done < <(git diff --cached --name-only -z --diff-filter=ACMR)
+
+staged_diff=$(mktemp)
+trap 'rm -f "$staged_diff"' EXIT
+git diff --cached --no-color --unified=0 > "$staged_diff"
+
+if grep -Eq "^\\+.*${forbidden_content_pattern}" "$staged_diff"; then
+  printf '%s\n' 'Commit blocked: staged changes appear to contain secret material.' >&2
+  printf '%s\n' 'Remove it, rotate any exposed credential, and use a documented secret reference instead.' >&2
+  exit 1
+fi
